@@ -28,9 +28,14 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
 
   // results is array of HistoryItem results
   chrome.history.search({ "text" : "", "startTime" : startTime, "maxResults" : 100 }, function (results) {
-    console.log(newstrition.parser.parseResults(results));
+    //console.log(newstrition.parser.parseResults(results));
   });
 
+  //mock results
+  var url = chrome.extension.getURL("mock/chart.json");
+  $.getJSON(url, function(json) {
+    console.log(json);
+  });
 });
 
 
