@@ -1,4 +1,2 @@
-newstrition
-===========
-
-How Healthy Is Your Information Digest?
+#newstrition
+##How Healthy Is Your Information Digest?
