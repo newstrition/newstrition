@@ -7,6 +7,10 @@ var newstrition = {
     var oneDay = 1000 * 60 * 60 * 24; //number of milliseconds in a day
     var startTime = currentTime - oneDay * numDays;
     return startTime;
+  },
+
+  addToPage: function (results) {
+
   }
 }
 
