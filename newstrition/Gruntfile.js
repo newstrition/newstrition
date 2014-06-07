@@ -24,7 +24,15 @@ module.exports = function(grunt) {
 	      }
 		},
 
-
+		connect: {
+			server: {
+				options: {
+				port: 9001,
+				base: './',
+				keepalive: true
+				}
+			}
+		},
 
 		uglify: {
 			my_target: {
@@ -61,12 +69,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	
+	grunt.loadNpmTasks('grunt-contrib-connect');
 
 
 	//register the task
 	//grunt.registerTask('test',['cssmin']);
-	
+	grunt.registerTask('server',['connect']);
 	grunt.registerTask('build',['clear','concat','uglify','cssmin']);
 	grunt.registerTask('c',['clear']); // This registers the watch task as the default task. If you require more tasks, create another one
 	grunt.registerTask('default',['watch']); // This registers the watch task as the default task. If you require more tasks, create another one
