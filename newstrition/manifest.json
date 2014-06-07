@@ -1,16 +1,11 @@
 {
-   "app": {
-      "background": {
-         "scripts": [ "js/background.js" ]
-      }
-   },
-   "description": "Boilerplate Chrome",
-   "icons": {
-      "128": "img/128.png"
-   },
+   "name": "Newstrition",
+   "description": "Tracks your media diet",
+   "version": "0.0.1",
    "manifest_version": 2,
-   "name": "Boilerplate Chrome Client",
-   "permissions": [ "pushMessaging", "storage", "notifications", "app.runtime" ],
-   "short_name": "Boilerplate",
-   "version": "0.0.1"
+   "permissions": [ "history", "storage", "https://embed.ly/*" ],
+   "browser_action": {
+     "default_icon": "img/icon.jpg",
+     "default_popup": "popup.html"
+   }
 }
