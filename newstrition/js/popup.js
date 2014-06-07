@@ -12,6 +12,7 @@ var newstrition = {
 
 newstrition.parser = {
   parseResults: function(array) {
+    // array: array of history items.
     return array; //endpoint for parsing
   }
 }
