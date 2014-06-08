@@ -118,7 +118,18 @@ _.extend(Newstrition.prototype, {
       $(".page1").show();
       $('.content2').empty();
     });
-    $('.page2').show();
+
+    var $page2 = $('.page2');
+    $page2.show();
+    
+    // Asynchronously load titles.
+    $page2.find('url-div a').each(function(el){
+      var escapedUrl = encodeURI($(el).attr('href'));
+      var endpoint = "http://api.embed.ly/1/extract?key=101bc33f920c46c69d93196edd9a8e1c&url=" + escapedUrl;
+      $.getJSON(endpoint, function(data) {
+        console.log(data);
+      });
+    });
   },
 
   renderChart : function(data) {
