@@ -84,7 +84,7 @@ _.extend(Newstrition.prototype, {
   },
 
   getListTemplate : function () {
-    var listTemplate = '<h1>{{title}}</h1>{{#historyItems}}<div class="url-div"><span>{{url}}</span></div>{{/historyItems}}';
+    var listTemplate = '<h1>{{title}}</h1>{{#analyzedHistoryItems}}<div class="url-div"><span>{{historyItem.url}}</span></div>{{/analyzedHistoryItems}}';
     var template = Handlebars.compile(listTemplate); 
     return template;
   },
@@ -211,17 +211,17 @@ _.extend(Newstrition.prototype, {
         if (_.isUndefined(categoryGroups[category])){
           categoryGroups[category] = {
             title: category,
-            historyItems: []
+            analyzedHistoryItems: []
           }
         }
-        categoryGroups[category].historyItems.push(analyzedHistoryItem);
+        categoryGroups[category].analyzedHistoryItems.push(analyzedHistoryItem);
         totalItems += 1;
       });
     });
 
     // Calculate aggregate stats for each category.
     _.each(categoryGroups, function(categoryGroup) { 
-      categoryGroup.rawPercentage = categoryGroup.historyItems.length/totalItems;
+      categoryGroup.rawPercentage = categoryGroup.analyzedHistoryItems.length/totalItems;
     });
 
     return categoryGroups;
@@ -239,10 +239,6 @@ _.extend(Newstrition.prototype, {
 
     return dfd.promise();
   },
-
-  generateAggregateData: function(categoryGroups) {
-    // Generate aggregate data from categories.
-  }
 
 });
 
@@ -290,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           historyItems: [{url: 'http://politicsA'}],
           color: '#bada55',
           number: .1,
-          historyItems: [{url: 'http://politicsA'}, {url: 'http://politicsB'}, {url: 'http://politicsC'}]
+          analyzedHistoryItems: [{url: 'http://politicsA'}],
         },
         {
           idNum: 1,
@@ -301,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           historyItems: [{url: 'http://politicsA'}],
           color: '#bada55',
           number: .3,
-          historyItems: [{url: 'http://politicsA2'}, {url: 'http://politicsB2'}, {url: 'http://politicsC2'}]
+          analyzedHistoryItems: [{url: 'http://politicsA'}],
         },
         {
           itNum: 2,
@@ -310,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           percentage : '40.0',
           rawPercentage: .4,
           color: '#bada55',
-          historyItems: [{url: 'http://politicsA'}]
+          analyzedHistoryItems: [{url: 'http://politicsA'}],
         },
         {
           idNum: 3,
@@ -318,15 +314,15 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           title : "Art",
           percentage : '20.0',
           rawPercentage: .2,
-          historyItems: [{url: 'http://politicsA'}],
+          analyzedHistoryItems: [{url: 'http://politicsA'}],
           color: '#bada55'
         }
       ]
     }; 
 
     // EDIT THIS TO CHANGE DATA SOURCE.
-    //var data = formattedData; 
-    var data = mockData; 
+    var data = formattedData; 
+    //var data = mockData; 
     newstrition.data = data;
     newstrition.render(newstrition.data);
   });
