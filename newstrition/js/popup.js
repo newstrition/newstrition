@@ -262,6 +262,11 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     var formattedData = {stats: []};
     var i = 0;
     _.each(categoryGroups, function(categoryGroup) {
+      // For presentation, ignore unknown.
+      if (categoryGroup.title === 'unknown') {
+        return;
+      }
+      
       // Create css-friendly category id from title (lowercase, dash-separated).
       categoryGroup.idNum = i;
       categoryGroup.idCat = categoryGroup.title.toLowerCase().replace(' ', '-');
@@ -270,6 +275,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
       formattedData.stats.push(categoryGroup);
       i += 1;
     });
+
     console.log('formattedData is: ', formattedData);
 
     // MOCK DATA.
