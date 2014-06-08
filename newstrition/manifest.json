@@ -1,7 +1,7 @@
 {
    "name": "Newstrition",
    "short_name": "Newstrition. You are what you read.",
-   "description": "Newstrition is a Google Chrome extension that uses your browser history to generate visualizations of what news you consume (by topic and by source).",
+   "description": "An extension that uses your browser history to generate visualizations of what news you consume (by topic and by source).",
    "version": "0.0.1",
    "manifest_version": 2,
    "permissions": [ "history", "storage" ],
