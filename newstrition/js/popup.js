@@ -126,13 +126,6 @@ $('.content').html(template(data))
       console.log(results);
     });
   });
-
-  //mock results
-  var url = chrome.extension.getURL("mock/chart.json");
-  $.getJSON(url, function(json) {
-    console.log(json);
-  });
-
 });
 
 
