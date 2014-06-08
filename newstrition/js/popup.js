@@ -1,5 +1,22 @@
 var Newstrition = function(){
   this.urlParser = new UrlParser();
+  
+  // This maps category ids to colors.
+  this.colorMap = {
+    'celebrity': '#bbbbbb',
+    'us-politics': '#009fe1',
+    'business':	'#f8ba62',
+    'culture': '#c38bfc',
+    'world': '#ff5b5b	',
+    'sports': '#f8ef62',
+    'science': '#62dcff',
+    'technology': '#08647e',
+    'opinion': '#ff628e',
+    'religion':	'#fc8bcb',
+    'education': '#c9ffb9',
+    'junk':	'#ff9b0c',
+    'entertainment': '#009fe1'
+  };
 };
 
 _.extend(Newstrition.prototype, {
@@ -228,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
       // Create css-friendly category id from title (lowercase, dash-separated).
       categoryGroup.idNum = i;
       categoryGroup.idCat = categoryGroup.title.toLowerCase().replace(' ', '-');
-
+      categoryGroup.color = newstrition.colorMap[categoryGroup.idCat];
       categoryGroup.percentage = (100 * categoryGroup.rawPercentage).toFixed(1);
       formattedData.stats.push(categoryGroup);
       i += 1;
@@ -241,8 +258,8 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
       stats: [
         {
           idNum: 0,
-          idCat:  'politics',
-          title : "Politics",
+          idCat:  'us-politics',
+          title : "US Politics",
           percentage : '10.0',
           rawPercentage: .1,
           historyItems: [{url: 'http://politicsA'}],
@@ -279,14 +296,9 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     }; 
 
     // EDIT THIS TO CHANGE DATA SOURCE.
-<<<<<<< HEAD
     //var data = mockData;
     var data = mockData; 
-=======
-    var data = mockData;
     //var data = formattedData; 
->>>>>>> FETCH_HEAD
-
 
     newstrition.render(data);
 
