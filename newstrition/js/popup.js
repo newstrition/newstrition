@@ -228,9 +228,14 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
   */
 
   newstrition = new Newstrition();
-  var analysisPromise = newstrition.getCategoryHistogramFromHistory();
+  //var analysisPromise = newstrition.getCategoryHistogramFromHistory();
+  // FAKING ANALYSIS FOR NOW
+  var analysisDfd = new $.Deferred();
+  var analysisPromise = analysisDfd.promise();
+  analysisDfd.resolve();
   // When analysis is ready, do the rendering.
-  analysisPromise.done(function(categoryHistogram) {
+
+  analysisPromise.done(function(categoryGroups) {
     // Format the category histogram for renderer.
 
     var mockData = { 
@@ -261,6 +266,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
         }
       ]
     }; 
+    var data = mockData;
 
     var sometemplate = '{{#stats}}{{title}}<br>{{percentage}}<br><br>{{/stats}}';
     var source = sometemplate;
