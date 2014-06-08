@@ -25,6 +25,7 @@ $textColor: #474747;
 
 
 body{
+	overflow: hidden;
 	font-weight: 100 !important;
 	color: $textColor;
 	width: 750px;
@@ -52,6 +53,7 @@ h1{
 .content{
 	position: relative;
 	width: 50%;
+	top: 20px;
 	z-index: 999999;
 	float: left;
 	.item{
@@ -61,6 +63,7 @@ h1{
 		width: 50%;
 		padding-left: 30px;
 		font-size: 24px;
+		margin-bottom: 10px;
 		.title{
 			
 		}
@@ -81,7 +84,7 @@ h1{
 			width: 10px;
 			position: relative;
 			left: -10px;
-			top: 10px;
+			top: 12px;
 			background-color: red;
 		}
 	}
@@ -99,3 +102,4 @@ h1{
 		left: 211px;
 	}
 }
+
