@@ -133,7 +133,9 @@ _.extend(Newstrition.prototype, {
     } else {
       chrome.history.search({
         text: "",
-        //startTime: startTime,
+
+        startTime: this.getStartSearchTime(),
+
       }, function (results) {
         dfd.resolve(results);
       });
@@ -221,14 +223,25 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
 
     // Format the category groups for renderer.
     var formattedData = {stats: []};
+    var i = 0;
     _.each(categoryGroups, function(categoryGroup) {
+      // Create css-friendly category id from title (lowercase, dash-separated).
+      categoryGroup.idNum = i;
+      categoryGroup.idCat = categoryGroup.title.toLowerCase().replace(' ', '-');
+
       categoryGroup.percentage = (100 * categoryGroup.rawPercentage).toFixed(1);
       formattedData.stats.push(categoryGroup);
+      i += 1;
     });
+    console.log('formattedData is: ', formattedData);
 
+    // MOCK DATA.
+    // THIS REPRESENTS THE FORMAT KYLE WANTS.
     var mockData = { 
       stats: [
         {
+          idNum: 0,
+          idCat:  'politics',
           title : "Politics",
           percentage : '10.0',
           rawPercentage: .1,
@@ -236,6 +249,8 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           color: '#bada55'
         },
         {
+          idNum: 1,
+          idCat: 'sports',
           title : "Sports",
           percentage : '30.0',
           rawPercentage: .3,
@@ -243,6 +258,8 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           color: '#bada55'
         },
         {
+          itNum: 2,
+          idCat: 'world',
           title : "World",
           percentage : '40.0',
           rawPercentage: .4,
@@ -250,6 +267,8 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           color: '#bada55'
         },
         {
+          idNum: 3,
+          idCat: 'art',
           title : "Art",
           percentage : '20.0',
           rawPercentage: .2,
@@ -260,8 +279,13 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     }; 
 
     // EDIT THIS TO CHANGE DATA SOURCE.
+<<<<<<< HEAD
     //var data = mockData;
     var data = mockData; 
+=======
+    var data = mockData;
+    //var data = formattedData; 
+>>>>>>> FETCH_HEAD
 
 
     newstrition.render(data);
