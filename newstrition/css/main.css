@@ -136,6 +136,15 @@ h1 {
     width: 10px;
     top: 5px;
     margin-right: 10px; }
+  .url-div .advice {
+    clear: both; }
+    .url-div .advice .advice-img {
+      float: left;
+      height: 85px;
+      width: 85px;
+      background-image: url("../img/broccoli.png");
+      background-size: contain;
+      background-repeat: no-repeat; }
 
 #hidePage2 {
   float: right;

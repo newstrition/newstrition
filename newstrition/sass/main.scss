@@ -224,6 +224,19 @@ h1{
 	}
 
 
+.advice {
+  clear: both;
+  .advice-img {
+    float: left;
+    height: 85px;
+    width: 85px;
+    background-image: url('../img/broccoli.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+}
+
+
 
 }
 
