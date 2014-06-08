@@ -162,29 +162,29 @@ _.extend(Newstrition.prototype, {
 
   generateCategoryGroups: function(analyzedHistoryItems) {
     // Generates category groupings from analyzed history items.
-    var groups = {};
+    var categoryGroups = {};
     _.each(analyzedHistoryItems, function(analyzedHistoryItem) {
       var categories = analyzedHistoryItem.parsedUrl.categories;
       _.each(categories, function(category) {
-        // Initialize histogram for category if needed.
-        if (_.isUndefined(categoryHistogram[category])){
-          categoryHistogram[category] = 0;
+        // Initialize group for category if needed.
+        if (_.isUndefined(categoryGroups[category])){
+          categoryGroups[category] = []
         }
-        categoryHistogram[category] += 1;
+        categoryGroups[category].push(analyzedHistoryItem);
       });
     });
 
-    return groups;
+    return categoryGroups;
   },
 
-  getCategoryHistogramFromHistory: function() {
+  getCategoryGroupsFromHistory: function() {
     var dfd = new $.Deferred();
     var _this = this;
     this.getHistoryItems().done(function(historyItems) {
       var analyzedHistoryItems = _this.analyzeHistoryItems(historyItems);
-      var categoryHistogram = _this.generateCategoryHistogram(
+      var categoryGroups = _this.generateCategoryGroups(
         analyzedHistoryItems);
-      dfd.resolve(categoryHistogram);
+      dfd.resolve(categoryGroups);
     });
 
     return dfd.promise();
@@ -228,15 +228,19 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
   */
 
   newstrition = new Newstrition();
-  //var analysisPromise = newstrition.getCategoryHistogramFromHistory();
+  var analysisPromise = newstrition.getCategoryGroupsFromHistory();
+  /*
   // FAKING ANALYSIS FOR NOW
   var analysisDfd = new $.Deferred();
-  var analysisPromise = analysisDfd.promise();
   analysisDfd.resolve();
+  var analysisPromise = analysisDfd.promise();
+  */
+
   // When analysis is ready, do the rendering.
 
   analysisPromise.done(function(categoryGroups) {
     // Format the category histogram for renderer.
+    console.log(categoryGroups);
 
     var mockData = { 
       stats: [
