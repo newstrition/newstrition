@@ -84,7 +84,7 @@ _.extend(Newstrition.prototype, {
   },
 
   getListTemplate : function () {
-    var listTemplate = '<h1>{{title}}</h1><div class="divider" style="background-color: {{color}}" ></div>{{#analyzedHistoryItems}}<div class="url-div"><a class="{{idCat}}" href="{{historyItem.url}}" target="_blank"><span>{{historyItem.url}}</span></a></div>{{/analyzedHistoryItems}}';
+    var listTemplate = '<h1>{{title}}</h1><div class="divider" style="background-color: {{color}}" ></div><div class="clearfix"></div>{{#analyzedHistoryItems}}<div class="url-div"><a class="{{idCat}}" href="{{historyItem.url}}" target="_blank"><span>{{historyItem.url}}</span></a></div>{{/analyzedHistoryItems}}';
     var template = Handlebars.compile(listTemplate); 
     return template;
   },

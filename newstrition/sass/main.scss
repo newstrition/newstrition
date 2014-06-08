@@ -225,25 +225,30 @@ h1{
 
 
 .advice {
-  clear: both;
-  .advice-img {
-    float: left;
-    height: 85px;
-    width: 85px;
-    background-image: url('../img/broccoli.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+  img{
+  	
   }
 }
 
 
 
 }
-
+.page2{
+	h1{
+		float: left;
+	}
+}
 #hidePage2{
-	float: right;
+	float: left;
 	color: #dedcdc;
 	font-size: 28px;
+	font-weight: 900;
+	color: #62dcff;
+	margin-right: 10px;
 	cursor: pointer;
+}
 
+.clearfix{
+	margin-top: 10px;
+	clear: both;
 }

@@ -136,18 +136,19 @@ h1 {
     width: 10px;
     top: 5px;
     margin-right: 10px; }
-  .url-div .advice {
-    clear: both; }
-    .url-div .advice .advice-img {
-      float: left;
-      height: 85px;
-      width: 85px;
-      background-image: url("../img/broccoli.png");
-      background-size: contain;
-      background-repeat: no-repeat; }
+
+.page2 h1 {
+  float: left; }
 
 #hidePage2 {
-  float: right;
+  float: left;
   color: #dedcdc;
   font-size: 28px;
+  font-weight: 900;
+  color: #62dcff;
+  margin-right: 10px;
   cursor: pointer; }
+
+.clearfix {
+  margin-top: 10px;
+  clear: both; }
