@@ -1,5 +1,100 @@
 @import "susy";
 
-p{
-	color: red;
+
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+
+
+ @font-face {
+    font-family: 'bariol_regularregular';
+    src: url('../fonts/bariol_regular-webfont.eot');
+    src: url('../fonts/bariol_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/bariol_regular-webfont.woff') format('woff'),
+         url('../fonts/bariol_regular-webfont.ttf') format('truetype'),
+         url('../fonts/bariol_regular-webfont.svg#bariol_regularregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+$font1: 'bariol_regularregular';
+$textColor: #474747;
+
+
+body{
+	font-weight: 100 !important;
+	color: $textColor;
+	width: 750px;
+	font-family: $font1, sans-serif;
+	font-weight:normal;
+}
+
+h1{
+	font-weight: 100 !important;
+	margin: 0;
+	padding: 0;
+}
+
+.chart{
+	float: left;
+	width: 50%;
+	
+	svg{
+		position: relative;
+		top: -30px;
+		left: -14px;
+	}
+}
+
+.content{
+	position: relative;
+	width: 50%;
+	z-index: 999999;
+	float: left;
+	.item{
+		position: relative;
+		float: left;
+		//background-color: blue;
+		width: 50%;
+		padding-left: 30px;
+		font-size: 24px;
+		.title{
+			
+		}
+		.num{
+			
+		}
+		&:last-of-type{
+			padding-right: 0;
+		}
+
+		&:before{
+			z-index: 999;
+			content: '';
+			display: block;
+			float: left;
+			height: 10px;
+			border: 3px solid white;
+			width: 10px;
+			position: relative;
+			left: -10px;
+			top: 10px;
+			background-color: red;
+		}
+	}
+
+	.line,.line2{
+		position: absolute;
+		background-color: #f2f3f4;
+		height: 400px;;
+		width: 4px;
+	}
+	.line{
+		left: 23px;
+	}
+	.line2{
+		left: 211px;
+	}
 }

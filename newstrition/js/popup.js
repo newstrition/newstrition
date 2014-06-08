@@ -28,26 +28,86 @@ _.extend(Newstrition.prototype, {
       return true;
   },
 
-  getEmbedlyMetadata: function (results) {
+  getTopLevelDomain: function (url) {
+    var matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+    var domain = matches && matches[1];  // domain will be null if no match is found
+    return domain;
+  },
+
+  getMetadata: function (results) {
     var filteredResults = [];
     for (var i = 0; i < results.length; i++) {
       var item = results[i];
       if (this.isAcceptedUrl(item.url)) {
-        var escapedUrl = encodeURI(item.url);
-        var endpoint = "http://api.embed.ly/1/extract?key=101bc33f920c46c69d93196edd9a8e1c&url=" + escapedUrl;
+        item.domain = this.getTopLevelDomain(item.url);
 
-        $.getJSON(endpoint, function(data) {
-          console.log(data);
-          var embedly = { 
-            provider_name : data.provider_name,
-            provider_url : data.provider_url 
-          };
-          item.embedly = embedly;
-        });
+        // ignore embedly metadata for now
+        // var escapedUrl = encodeURI(item.url);
+        // var endpoint = "http://api.embed.ly/1/extract?key=101bc33f920c46c69d93196edd9a8e1c&url=" + escapedUrl;
+        // $.getJSON(endpoint, function(data) {
+          //   console.log(data);
+          //   var embedly = { 
+            //     provider_name : data.provider_name,
+            //     provider_url : data.provider_url 
+            //   };
+            //   item.embedly = embedly;
+        //});
         filteredResults.push(item);
       }
     }
     return filteredResults;
+  },
+
+  getTemplate : function () {
+    var sometemplate = '{{#stats}}<div><span class="title">{{title}}</span> <span class="num">{{percentage}}</span></div>{{/stats}}';
+    var source = sometemplate;
+    var template = Handlebars.compile(source); 
+    return template;
+  },
+
+  render: function (data) {
+    this.renderHtml(data);
+    this.renderChart(data.stats);
+  },
+
+  renderHtml : function(data) {
+    var template = this.getTemplate();
+    $('.content').append(template(data));
+  },
+
+  renderChart : function(data) {
+    (function(nv, d3, data) {
+      var colors = [
+        '#ff628e',
+        '#ff7777',
+        '#62dcff',
+        '#08647e'
+      ];
+      nv.addGraph(function() {
+        var chart = nv.models.pieChart()
+        .x(function(d) { return d.title; })
+        .y(function(d) { return d.percentage; })
+        .showLabels(false)
+        .showLegend(false)
+        .labelThreshold(0.5)
+        .donut(true)
+        .donutRatio(0.45)
+        .color(colors)
+        .margin({
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        });
+
+        d3.select('svg')
+        .datum(data)
+        .transition().duration(500)
+        .call(chart); 
+
+        return chart;
+      });
+    })(nv, d3, data);
   },
 
   getHistoryItems: function() {
@@ -96,9 +156,9 @@ _.extend(Newstrition.prototype, {
     return analyzedHistoryItems;
   },
 
-  generateCategoryHistogram: function(analyzedHistoryItems) {
-    // Generates category histogram from analyzed history items.
-    var categoryHistogram = {};
+  generateCategoryGroups: function(analyzedHistoryItems) {
+    // Generates category groupings from analyzed history items.
+    var groups = {};
     _.each(analyzedHistoryItems, function(analyzedHistoryItem) {
       var categories = analyzedHistoryItem.parsedUrl.categories;
       _.each(categories, function(category) {
@@ -110,7 +170,7 @@ _.extend(Newstrition.prototype, {
       });
     });
 
-    return categoryHistogram;
+    return groups;
   },
 
   getCategoryHistogramFromHistory: function() {
@@ -168,7 +228,54 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
   // When analysis is ready, do the rendering.
   analysisPromise.done(function(categoryHistogram) {
     // Format the category histogram for renderer.
+
     var mockData = { 
+      stats: [
+        {
+          title : "Politics",
+          percentage : 10.0,
+          number: .1,
+          historyItems: [{url: 'http://politicsA'}, {'http://politicsB'}]
+        },
+        {
+          title : "Sports",
+          percentage : 30.0,
+          number: .3,
+          historyItems: [{url: 'http://sportsA'}, {'http://sportsB'}]
+        },
+        {
+          title : "World",
+          percentage : 40.0,
+          number: .4,
+          historyItems: [{url: 'http://worldA'}, {'http://worldB'}]
+        },
+        {
+          title : "Art",
+          percentage : 20.0,
+          number: .2,
+          historyItems: [{url: 'http://ArtA'}, {'http://ArtB'}]
+        }
+      ]
+    }; 
+
+    var sometemplate = '{{#stats}}{{title}}<br>{{percentage}}<br><br>{{/stats}}';
+    var source = sometemplate;
+    var template = Handlebars.compile(source); 
+
+    $('.content').html(template(data));
+  });
+
+/*
+
+document.addEventListener('DOMContentLoaded', function () { //TODO: what is a better endpoint?
+  console.log("still alive");
+  var startTime = newstrition.getStartSearchTime(1); // get one day of browsing history
+
+  // results is array of HistoryItem results
+  chrome.history.search({ "text" : "", "startTime" : startTime, "maxResults" : 5 }, function (results) {
+    console.log(newstrition.parser.parseResults(results));
+    results = newstrition.getMetadata(results);
+    var data = { 
       stats: [
         {
           "title" : "Politics",
@@ -189,23 +296,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
       ]
     }; 
 
-    var sometemplate = '{{#stats}}{{title}}<br>{{percentage}}<br><br>{{/stats}}';
-    var source = sometemplate;
-    var template = Handlebars.compile(source); 
-
-    $('.content').html(template(data));
-  });
-
-/*
-  // results is array of HistoryItem results
-  chrome.history.search({ "text" : "", "startTime" : startTime, "maxResults" : 5 }, function (results) {
-    console.log(newstrition.parser.parseResults(results));
-    results = newstrition.getEmbedlyMetadata(results);
-
-    window.setTimeout(3000, function() {
-      console.log("result");
-      console.log(results);
-    });
+    newstrition.render(data);
   });
 
   //mock results
