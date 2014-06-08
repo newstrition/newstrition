@@ -59,9 +59,9 @@ _.extend(Newstrition.prototype, {
   },
 
   getPage1Template : function () {
-    var sometemplate = '{{#stats}}<div class="item {{catageory-class}}"><span class="num" style="color:{{color}}">{{percentage}}</span>% <span class="title">{{title}}</span></div>{{/stats}}';
+    var sometemplate = '{{#stats}}<div  data-index="{{idNum}}" class="item {{idCat}}"><span class="num" style="color:{{color}}">{{percentage}}</span>% <span class="title">{{title}}</span></div>{{/stats}}';
     var source = sometemplate;
-    var template = Handlebars.compile(source); 
+    var template = Handlebars.compile(source);
     return template;
   },
 
@@ -134,7 +134,7 @@ _.extend(Newstrition.prototype, {
       chrome.history.search({
         text: "",
 
-        startTime: this.getStartSearchTime(),
+        //startTime: this.getStartSearchTime(),
 
       }, function (results) {
         dfd.resolve(results);
@@ -279,13 +279,9 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     }; 
 
     // EDIT THIS TO CHANGE DATA SOURCE.
-<<<<<<< HEAD
-    //var data = mockData;
+
     var data = mockData; 
-=======
-    var data = mockData;
-    //var data = formattedData; 
->>>>>>> FETCH_HEAD
+
 
 
     newstrition.render(data);
