@@ -321,8 +321,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     }; 
 
     // EDIT THIS TO CHANGE DATA SOURCE.
-    var data = formattedData; 
-    //var data = mockData; 
+    var data = formattedData;
     newstrition.data = data;
     newstrition.render(newstrition.data);
   });

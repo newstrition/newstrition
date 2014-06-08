@@ -186,6 +186,12 @@ h1{
 		}
 }
 
+.item.celebrity{
+	
+		&:before{
+			background-color: blue;
+		}
+}
 
 
 
