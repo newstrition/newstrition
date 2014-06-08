@@ -103,3 +103,90 @@ h1{
 	}
 }
 
+
+////new items
+
+.item.us-politics{
+	
+		&:before{
+			background-color: #009fe1;
+		}
+}
+
+.item.business{
+	
+		&:before{
+			background-color: #f8ba62 ;
+		}
+}
+.item.culture{
+	
+		&:before{
+			background-color: #c38bfc;
+		}
+}
+.item.world{
+	
+		&:before{
+			background-color: #ff5b5b ;
+		}
+}
+.item.sports{
+	
+		&:before{
+			background-color: #f8ef62;
+		}
+}
+.item.science{
+	
+		&:before{
+			background-color: #62dcff;
+		}
+}
+.item.technology{
+	
+		&:before{
+			background-color: #08647e;
+		}
+}
+.item.opinion{
+	
+		&:before{
+			background-color: #ff628e;
+		}
+}
+.item.religion{
+	
+		&:before{
+			background-color:  #fc8bcb;
+		}
+}
+.item.education{
+	
+		&:before{
+			background-color: #c9ffb9;
+		}
+}
+.item.junk{
+	
+		&:before{
+			background-color:#ff9b0c ;
+		}
+}
+.item.entertainment{
+	
+		&:before{
+			background-color: #009fe1;
+		}
+}
+.item.celebrity{
+	
+		&:before{
+			background-color: #bbbbbb;
+		}
+}
+
+
+
+
+

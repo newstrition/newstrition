@@ -59,7 +59,7 @@ _.extend(Newstrition.prototype, {
   },
 
   getPage1Template : function () {
-    var sometemplate = '{{#stats}}<div class="item"><span class="num">{{percentage}}</span>% <span class="title">{{title}}</span></div>{{/stats}}';
+    var sometemplate = '{{#stats}}<div class="item {{catageory-class}}"><span class="num" style="color:{{color}}">{{percentage}}</span>% <span class="title">{{title}}</span></div>{{/stats}}';
     var source = sometemplate;
     var template = Handlebars.compile(source); 
     return template;
@@ -81,13 +81,7 @@ _.extend(Newstrition.prototype, {
   },
   renderChart : function(data) {
     (function(nv, d3, data) {
-      var colors = [
-        '#ff628e',
-        '#ff7777',
-        '#62dcff',
-        '#08647e'
-      ];
-      alert(data[0].color)
+      
       nv.addGraph(function() {
 
         var chart = nv.models.pieChart()
@@ -98,7 +92,7 @@ _.extend(Newstrition.prototype, {
         .labelThreshold(0.5)
         .donut(true)
         .donutRatio(0.45)
-        .color(colors)
+        .color(function(d) { console.log(d); return d.data.color})
         .margin({
           top: 0,
           right: 0,
@@ -139,7 +133,7 @@ _.extend(Newstrition.prototype, {
     } else {
       chrome.history.search({
         text: "",
-        startTime: startTime,
+        //startTime: startTime,
       }, function (results) {
         dfd.resolve(results);
       });
@@ -239,31 +233,35 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           percentage : '10.0',
           rawPercentage: .1,
           historyItems: [{url: 'http://politicsA'}],
+          color: '#bada55'
         },
         {
           title : "Sports",
           percentage : '30.0',
           rawPercentage: .3,
           historyItems: [{url: 'http://politicsA'}],
+          color: '#bada55'
         },
         {
           title : "World",
           percentage : '40.0',
           rawPercentage: .4,
           historyItems: [{url: 'http://politicsA'}],
+          color: '#bada55'
         },
         {
           title : "Art",
           percentage : '20.0',
           rawPercentage: .2,
           historyItems: [{url: 'http://politicsA'}],
+          color: '#bada55'
         }
       ]
     }; 
 
     // EDIT THIS TO CHANGE DATA SOURCE.
     //var data = mockData;
-    var data = formattedData; 
+    var data = mockData; 
 
 
     newstrition.render(data);
