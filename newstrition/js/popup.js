@@ -84,7 +84,7 @@ _.extend(Newstrition.prototype, {
   },
 
   getListTemplate : function () {
-    var listTemplate = '<h1>{{title}}</h1><div class="divider" style="background-color: {{color}}" ></div><div class="clearfix"></div>{{#analyzedHistoryItems}}<div class="url-div"><a class="{{idCat}}" href="{{historyItem.url}}" target="_blank"><span>{{historyItem.url}}</span></a></div>{{/analyzedHistoryItems}}';
+    var listTemplate = '<h1>{{title}}</h1><div class="divider" style="background-color: {{color}}" ></div><div class="clearfix"></div>{{#analyzedHistoryItems}}<div class="url-div"><a class="{{idCat}}" href="{{historyItem.url}}" target="_blank"><img src="img/loading.gif" class="item-favicon" style="width:16px; height: 16px;"></span><span>{{historyItem.url}}</span></a></div>{{/analyzedHistoryItems}}';
     var template = Handlebars.compile(listTemplate); 
     return template;
   },
@@ -118,7 +118,19 @@ _.extend(Newstrition.prototype, {
       $(".page1").show();
       $('.content2').empty();
     });
-    $('.page2').show();
+
+    var $page2 = $('.page2');
+    $page2.show();
+    
+    // Asynchronously load titles.
+    $page2.find('.url-div a').each(function(idx, el){
+      var $el = $(el);
+      var escapedUrl = encodeURI($el.attr('href'));
+      var endpoint = "http://api.embed.ly/1/extract?key=101bc33f920c46c69d93196edd9a8e1c&url=" + escapedUrl;
+      $.getJSON(endpoint, function(data) {
+        $el.find('img').attr('src', data.favicon_url);
+      });
+    });
   },
 
   renderChart : function(data) {
