@@ -75,27 +75,52 @@ _.extend(Newstrition.prototype, {
     return filteredResults;
   },
 
-  getPage1Template : function () {
+  getContentTemplate : function () {
     var sometemplate = '{{#stats}}<div class="item {{catageory-class}}"><span class="num" style="color:{{color}}">{{percentage}}</span>% <span class="title">{{title}}</span></div>{{/stats}}';
     var source = sometemplate;
     var template = Handlebars.compile(source); 
     return template;
   },
 
+  getListTemplate : function () {
+    var listTemplate = '{{#historyItems}}<div class="url-div"><span>{{url}}</span></div>{{/historyItems}}';
+    var template = Handlebars.compile(listTemplate); 
+    return template;
+  },
+
   render: function (data) {
-    this.renderPage1(data);
+    // render view 1
+    this.renderContent(data);
     this.renderChart(data.stats);
+
   },
 
-  renderPage1 : function(data) {
-    var template = this.getPage1Template();
+  renderContent : function(data) {
+    var _this = this;
+    var template = this.getContentTemplate();
     $('.content').append(template(data));
+
+    $(".item").click(function (e) {
+      var myClass = $(e.delegateTarget).attr("class"); 
+      var dataIndex = $(e.delegateTarget).attr("data-index"); 
+      //hide the first page, show the second
+      $(".page1").hide();
+      _this.renderPage2(data.stats[0]);
+    });
   },
 
-  renderPage2 : function(data) {
-    var template = this.getTemplate();
-    $('.content').append(template(data));
+  renderPage2 : function(dataPoint) {
+    var template = this.getListTemplate();
+    $('.content2').append(template(dataPoint));
+    $("#hidePage2").off();
+    $("#hidePage2").click(function (e) {
+      $('.page2').hide();
+      $(".page1").show();
+      $('.content2').empty();
+    });
+    $('.page2').show();
   },
+
   renderChart : function(data) {
     (function(nv, d3, data) {
       
@@ -263,7 +288,9 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           percentage : '10.0',
           rawPercentage: .1,
           historyItems: [{url: 'http://politicsA'}],
-          color: '#bada55'
+          color: '#bada55',
+          number: .1,
+          historyItems: [{url: 'http://politicsA'}, {url: 'http://politicsB'}, {url: 'http://politicsC'}]
         },
         {
           idNum: 1,
@@ -272,7 +299,9 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           percentage : '30.0',
           rawPercentage: .3,
           historyItems: [{url: 'http://politicsA'}],
-          color: '#bada55'
+          color: '#bada55',
+          number: .3,
+          historyItems: [{url: 'http://politicsA2'}, {url: 'http://politicsB2'}, {url: 'http://politicsC2'}]
         },
         {
           itNum: 2,
@@ -296,14 +325,10 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     }; 
 
     // EDIT THIS TO CHANGE DATA SOURCE.
-    //var data = mockData;
-    var data = mockData; 
     //var data = formattedData; 
-
-    newstrition.render(data);
-
-  
-  
+    var data = mockData; 
+    newstrition.data = data;
+    newstrition.render(newstrition.data);
   });
 });
 
