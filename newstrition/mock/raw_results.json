@@ -1,0 +1,12 @@
+[
+{
+  url: ‘http://nytimes.com/food/cheese/bestcheeses2444443’,
+  source: {
+     id: ‘http://nytimes.com’,
+      title: ‘NYTimes’,
+      favicon: “http://nytimes/favicon”
+  }
+  categories: [‘dining’]
+  timestamps: [243234]
+}]
+
