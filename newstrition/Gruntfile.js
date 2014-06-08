@@ -78,5 +78,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('build',['clear','concat','uglify','cssmin']);
 	grunt.registerTask('c',['clear']); // This registers the watch task as the default task. If you require more tasks, create another one
 	grunt.registerTask('default',['watch']); // This registers the watch task as the default task. If you require more tasks, create another one
+	grunt.registerTask('watchserver',['server', 'watch']); // This registers the watch task as the default task. If you require more tasks, create another one
 
 };

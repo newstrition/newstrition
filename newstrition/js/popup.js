@@ -1,4 +1,8 @@
-var newstrition = {
+var Newstrition = function(){
+  this.urlParser = new UrlParser();
+};
+
+_.extend(Newstrition.prototype, {
   /*
   * Gets the start date in milliseconds from epoch, based on the number of days to take into account
   */
@@ -31,7 +35,7 @@ var newstrition = {
       if (this.isAcceptedUrl(item.url)) {
         var escapedUrl = encodeURI(item.url);
         var endpoint = "http://api.embed.ly/1/extract?key=101bc33f920c46c69d93196edd9a8e1c&url=" + escapedUrl;
-        
+
         $.getJSON(endpoint, function(data) {
           console.log(data);
           var embedly = { 
@@ -44,78 +48,155 @@ var newstrition = {
       }
     }
     return filteredResults;
-  }
-}
+  },
 
-newstrition.parser = {
-  parseResults: function(array) {
-    // array: array of history items.
-    return array; //endpoint for parsing
+  getHistoryItems: function() {
+    var dfd = new $.Deferred();
+    // FAKE HISTORY IF TESTING.
+    if (! chrome.history) {
+      var mockHistoryItems = [
+        {url: 'http://www.nytimes.com/2014/06/08/us/cleveland-clinic-chief-out-of-running-for-va.html?ref=health'},
+        {url: 'http://www.syriadeeply.org/articles/2014/06/5572/assessing-state-syrias-detainees/'},
+        {url: 'http://www.washingtonpost.com/politics/how-bill-gates-pulled-off-the-swift-common-core-revolution/2014/06/07/a830e32e-ec34-11e3-9f5c-9075d5508f0a_story.html?hpid=z1'},
+        {url: '"http://www.bbc.com/news/world-us-canada-27745005'},
+        {url: 'http://www.bbc.com/sport/0/football/27383495'},
+        {url: 'http://www.cnn.com/2014/06/04/tech/innovation/cousteau-mission-31/index.html?hpt=hp_bn5'},
+        {url: 'http://www.slate.com/articles/health_and_science/science/2014/06/d_day_normandy_landing_science_the_army_navy_compromise_on_tides_and_timing.html'},
+        {url: 'http://www.slate.com/articles/business/how_failure_breeds_success/2014/05/richard_branson_tax_fraud_how_a_youthful_indiscretion_helped_create_a_billionaire.html?wpisrc=obinsite'},
+        {url: 'http://www.vogue.com/vogue-daily/article/5-stylish-women-share-their-best-wedding-day-beauty-tips/'},
+        {url: 'http://www.theverge.com/2014/6/3/5777166/mit-robot-gives-wearer-extra-arms-video-demonstation'},
+        {url: 'http://www.vanityfair.com/culture/2014/06/tony-nominee-portraits-2014'},
+        {url: 'http://www.theatlantic.com/technology/archive/2014/06/fabien-cousteau-mission-31/371947/'},
+        {url: 'http://www.economist.com/news/science-and-technology/21602988-human-beings-are-brainy-weaklings-muscled-out'}
+      ];
+      dfd.resolve(mockHistoryItems);
+    } else {
+      chrome.history.search({
+        text: "",
+        startTime: startTime,
+      }, function (results) {
+        dfd.resolve(results);
+      });
+    }
+
+    return dfd.promise();
+  },
+
+  analyzeHistoryItems: function(historyItems){
+    // Returns analyzed history items.
+    var analyzedHistoryItems = [];
+    _.each(historyItems, function(historyItem) {
+      var parsedUrl = this.urlParser.parseUrl(historyItem.url);
+      analyzedHistoryItems.push({
+        historyItem: historyItem,
+        parsedUrl: parsedUrl
+      });
+    }, this);
+
+    return analyzedHistoryItems;
+  },
+
+  generateCategoryHistogram: function(analyzedHistoryItems) {
+    // Generates category histogram from analyzed history items.
+    var categoryHistogram = {};
+    _.each(analyzedHistoryItems, function(analyzedHistoryItem) {
+      var categories = analyzedHistoryItem.parsedUrl.categories;
+      _.each(categories, function(category) {
+        // Initialize histogram for category if needed.
+        if (_.isUndefined(categoryHistogram[category])){
+          categoryHistogram[category] = 0;
+        }
+        categoryHistogram[category] += 1;
+      });
+    });
+
+    return categoryHistogram;
+  },
+
+  getCategoryHistogramFromHistory: function() {
+    var dfd = new $.Deferred();
+    var _this = this;
+    this.getHistoryItems().done(function(historyItems) {
+      var analyzedHistoryItems = _this.analyzeHistoryItems(historyItems);
+      var categoryHistogram = _this.generateCategoryHistogram(
+        analyzedHistoryItems);
+      dfd.resolve(categoryHistogram);
+    });
+
+    return dfd.promise();
+  },
+
+  formatAggregateAnalysis: function(analysisResult) {
+    // Covnerts aggregate analysis into render data object.
   }
-}
+});
+
 
 document.addEventListener('DOMContentLoaded', function () { //TODO: what is a better endpoint?
   console.log("still alive");
 
+  /*
   var startTime = newstrition.getStartSearchTime(1); // get one day of browsing history
+  var theTemplateScript = '{{#each}}{{title}}{{/each}}'; // (step 1)
+
+  var theData =  [
+  {
+  "title" : "Politics",
+  "percentage" : 10.0,
+  },
+  {
+  "title" : "Sports",
+  "percentage" : 30.0,
+  },
+  {
+  "title" : "World",
+  "percentage" : 40.0,
+  },
+  {
+  "title" : "Art",
+  "percentage" : 20.0,
+  }
+  ];
+
+  var theTemplate = Handlebars.compile(theTemplateScript);
+  $('.content').append(theTemplate(theData));
+
+  */
+
+  newstrition = new Newstrition();
+  var analysisPromise = newstrition.getCategoryHistogramFromHistory();
+  // When analysis is ready, do the rendering.
+  analysisPromise.done(function(categoryHistogram) {
+    // Format the category histogram for renderer.
+    var mockData = { 
+      stats: [
+        {
+          "title" : "Politics",
+          "percentage" : 10.0,
+        },
+        {
+          "title" : "Sports",
+          "percentage" : 30.0,
+        },
+        {
+          "title" : "World",
+          "percentage" : 40.0,
+        },
+        {
+          "title" : "Art",
+          "percentage" : 20.0,
+        }
+      ]
+    }; 
+
+    var sometemplate = '{{#stats}}{{title}}<br>{{percentage}}<br><br>{{/stats}}';
+    var source = sometemplate;
+    var template = Handlebars.compile(source); 
+
+    $('.content').html(template(data));
+  });
 
 /*
-var theTemplateScript = '{{#each}}{{title}}{{/each}}'; // (step 1)
-
-var theData =  [
-  {
-    "title" : "Politics",
-    "percentage" : 10.0,
-  },
-  {
-    "title" : "Sports",
-    "percentage" : 30.0,
-  },
-  {
-    "title" : "World",
-    "percentage" : 40.0,
-  },
-  {
-    "title" : "Art",
-    "percentage" : 20.0,
-  }
-];
-
-var theTemplate = Handlebars.compile(theTemplateScript);
-$('.content').append(theTemplate(theData));
-
-*/
-
-
-var sometemplate = '{{#stats}}{{title}}<br>{{percentage}}<br><br>{{/stats}}';
-var source = sometemplate;
-var template = Handlebars.compile(source); 
-
-var data = { 
-    stats: [
-  {
-    "title" : "Politics",
-    "percentage" : 10.0,
-  },
-  {
-    "title" : "Sports",
-    "percentage" : 30.0,
-  },
-  {
-    "title" : "World",
-    "percentage" : 40.0,
-  },
-  {
-    "title" : "Art",
-    "percentage" : 20.0,
-  }
-]
-}; 
-
-
-
-$('.content').html(template(data))
-
   // results is array of HistoryItem results
   chrome.history.search({ "text" : "", "startTime" : startTime, "maxResults" : 5 }, function (results) {
     console.log(newstrition.parser.parseResults(results));
@@ -132,6 +213,7 @@ $('.content').html(template(data))
   $.getJSON(url, function(json) {
     console.log(json);
   });
+  */
 
 });
 
