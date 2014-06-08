@@ -232,27 +232,33 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
       formattedData.stats.push(categoryGroup);
     });
 
+    // MOCK DATA.
+    // THIS REPRESENTS THE FORMAT KYLE WANTS.
     var mockData = { 
       stats: [
         {
+          categoryId:  'politics',
           title : "Politics",
           percentage : '10.0',
           rawPercentage: .1,
           historyItems: [{url: 'http://politicsA'}],
         },
         {
+          categoryId: 'sports',
           title : "Sports",
           percentage : '30.0',
           rawPercentage: .3,
           historyItems: [{url: 'http://politicsA'}],
         },
         {
+          categoryId: 'world',
           title : "World",
           percentage : '40.0',
           rawPercentage: .4,
           historyItems: [{url: 'http://politicsA'}],
         },
         {
+          categoryId: 'art',
           title : "Art",
           percentage : '20.0',
           rawPercentage: .2,
