@@ -93,7 +93,6 @@ _.extend(Newstrition.prototype, {
     // render view 1
     this.renderContent(data);
     this.renderChart(data.stats);
-
   },
 
   renderContent : function(data) {
@@ -310,8 +309,8 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           title : "World",
           percentage : '40.0',
           rawPercentage: .4,
-          historyItems: [{url: 'http://politicsA'}],
-          color: '#bada55'
+          color: '#bada55',
+          historyItems: [{url: 'http://politicsA'}]
         },
         {
           idNum: 3,
