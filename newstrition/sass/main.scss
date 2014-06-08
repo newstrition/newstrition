@@ -65,6 +65,9 @@ h1{
 		font-size: 24px;
 		margin-bottom: 10px;
 		.title{
+			font-size: 18px;
+			display: block;
+			margin-left: 10px;
 			
 		}
 		.num{
@@ -196,9 +199,38 @@ h1{
 
 .divider{
 	width: 100%;
+	margin-top: 5px;
 	background-color: red;
-	height: 5px;
-	margin-bottom: 30px;
+	height: 2px;
+	margin-bottom: 10px;
 }
 
+.url-div{
+	margin-left: 20px;
+	-webkit-transition: all .4s;
+	&:hover, &:target{
+		color: lighten($textColor, 50%);
+	}
+	&:before{
+		content: '';
+		float: left;
+		display: block;
+		position: relative;
+		background-color: #dedcdc;
+		height: 10px;
+		width: 10px;
+		top: 5px;
+		margin-right: 10px;
+	}
 
+
+
+}
+
+#hidePage2{
+	float: right;
+	color: #dedcdc;
+	font-size: 28px;
+	cursor: pointer;
+
+}
