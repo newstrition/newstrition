@@ -115,3 +115,13 @@ h1 {
   background-color: red;
   height: 5px;
   margin-bottom: 30px; }
+
+.advice {
+  clear: both; }
+  .advice .advice-img {
+    float: left;
+    height: 85px;
+    width: 85px;
+    background-image: url("../img/broccoli.png");
+    background-size: contain;
+    background-repeat: no-repeat; }
