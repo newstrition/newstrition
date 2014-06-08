@@ -71,7 +71,7 @@ _.extend(Newstrition.prototype, {
   },
 
   renderPage1 : function(data) {
-    var template = this.getTemplate();
+    var template = this.getPage1Template();
     $('.content').append(template(data));
   },
 
@@ -267,55 +267,11 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
       ]
     }; 
     var data = mockData;
-
-    var sometemplate = '{{#stats}}{{title}}<br>{{percentage}}<br><br>{{/stats}}';
-    var source = sometemplate;
-    var template = Handlebars.compile(source); 
-
-    $('.content').html(template(data));
-  });
-
-/*
-
-document.addEventListener('DOMContentLoaded', function () { //TODO: what is a better endpoint?
-  console.log("still alive");
-  var startTime = newstrition.getStartSearchTime(1); // get one day of browsing history
-
-  // results is array of HistoryItem results
-  chrome.history.search({ "text" : "", "startTime" : startTime, "maxResults" : 5 }, function (results) {
-    console.log(newstrition.parser.parseResults(results));
-    results = newstrition.getMetadata(results);
-    var data = { 
-      stats: [
-        {
-          "title" : "Politics",
-          "percentage" : 10.0,
-        },
-        {
-          "title" : "Sports",
-          "percentage" : 30.0,
-        },
-        {
-          "title" : "World",
-          "percentage" : 40.0,
-        },
-        {
-          "title" : "Art",
-          "percentage" : 20.0,
-        }
-      ]
-    }; 
-
     newstrition.render(data);
-  });
 
-  //mock results
-  var url = chrome.extension.getURL("mock/chart.json");
-  $.getJSON(url, function(json) {
-    console.log(json);
+  
+  
   });
-  */
-
 });
 
 
