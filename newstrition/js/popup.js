@@ -175,16 +175,6 @@ var data = [
 })(nv, d3, data);
 
 
-
-
-
-
-
-
-
-
-
-
   // results is array of HistoryItem results
   chrome.history.search({ "text" : "", "startTime" : startTime, "maxResults" : 5 }, function (results) {
     console.log(newstrition.parser.parseResults(results));
@@ -195,13 +185,6 @@ var data = [
       console.log(results);
     });
   });
-
-  //mock results
-  var url = chrome.extension.getURL("mock/chart.json");
-  $.getJSON(url, function(json) {
-    console.log(json);
-  });
-
 });
 
 
