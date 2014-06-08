@@ -51,8 +51,10 @@ h1{
 .content{
 	position: relative;
 	width: 50%;
+	z-index: 999999;
 	float: left;
-	div{
+	.item{
+		position: relative;
 		float: left;
 		//background-color: blue;
 		width: 50%;
@@ -73,22 +75,26 @@ h1{
 			content: '';
 			display: block;
 			float: left;
-			height: 5px;
-			width: 5px;
+			height: 10px;
+			border: 3px solid white;
+			width: 10px;
+			position: relative;
+			left: -10px;
+			top: 10px;
 			background-color: red;
 		}
 	}
 
 	.line,.line2{
 		position: absolute;
-		background-color: grey;
+		background-color: #f2f3f4;
 		height: 400px;;
 		width: 4px;
 	}
 	.line{
-		left: 10px;
+		left: 23px;
 	}
 	.line2{
-		left: 220px;
+		left: 211px;
 	}
 }

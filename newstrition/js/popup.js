@@ -87,7 +87,7 @@ $('.content').append(theTemplate(theData));
 */
 
 
-var sometemplate = '{{#stats}}<div><span class="title">{{title}}</span> <span class="num">{{percentage}}</span></div>{{/stats}}';
+var sometemplate = '{{#stats}}<div class="item"><span class="title">{{title}}</span> <span class="num">{{percentage}}</span></div>{{/stats}}';
 var source = sometemplate;
 var template = Handlebars.compile(source); 
 
@@ -114,9 +114,9 @@ var data = {
 
 
 
-$('.content').append(template(data));
+//$('.content').append(template(data));
 
-
+$('.line2').after(template(data))
 
 var data = [
   {
@@ -136,9 +136,6 @@ var data = [
     'percentage' : 20.0
   }
 ];
-
-
-
 
 
 (function(nv, d3, data) {
