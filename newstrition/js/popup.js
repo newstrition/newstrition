@@ -206,6 +206,10 @@ _.extend(Newstrition.prototype, {
     _.each(analyzedHistoryItems, function(analyzedHistoryItem) {
       var categories = analyzedHistoryItem.parsedUrl.categories;
       _.each(categories, function(category) {
+        // For presentation, ignore unknown.
+        if (category === 'unknown') {
+          return;
+        }
         // Initialize group for category if needed.
         if (_.isUndefined(categoryGroups[category])){
           categoryGroups[category] = {
@@ -261,12 +265,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     // Format the category groups for renderer.
     var formattedData = {stats: []};
     var i = 0;
-    _.each(categoryGroups, function(categoryGroup) {
-      // For presentation, ignore unknown.
-      if (categoryGroup.title === 'unknown') {
-        return;
-      }
-      
+    _.each(categoryGroups, function(categoryGroup) { 
       // Create css-friendly category id from title (lowercase, dash-separated).
       categoryGroup.idNum = i;
       categoryGroup.idCat = categoryGroup.title.toLowerCase().replace(' ', '-');
