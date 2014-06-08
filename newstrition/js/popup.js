@@ -55,7 +55,7 @@ var newstrition = {
     return filteredResults;
   },
 
-  getTemplate : function () {
+  getPage1Template : function () {
     var sometemplate = '{{#stats}}<div class="item"><span class="title">{{title}}</span> <span class="num">{{percentage}}</span></div>{{/stats}}';
     var source = sometemplate;
     var template = Handlebars.compile(source); 
@@ -63,15 +63,19 @@ var newstrition = {
   },
 
   render: function (data) {
-    this.renderHtml(data);
+    this.renderPage1(data);
     this.renderChart(data.stats);
   },
 
-  renderHtml : function(data) {
+  renderPage1 : function(data) {
     var template = this.getTemplate();
     $('.content').append(template(data));
   },
 
+  renderPage2 : function(data) {
+    var template = this.getTemplate();
+    $('.content').append(template(data));
+  },
   renderChart : function(data) {
     (function(nv, d3, data) {
       var colors = [
