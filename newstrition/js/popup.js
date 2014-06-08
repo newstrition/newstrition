@@ -84,7 +84,7 @@ _.extend(Newstrition.prototype, {
   },
 
   getListTemplate : function () {
-    var listTemplate = '{{#historyItems}}<div class="url-div"><span>{{url}}</span></div>{{/historyItems}}';
+    var listTemplate = '<h1>{{title}}</h1>{{#historyItems}}<div class="url-div"><span>{{url}}</span></div>{{/historyItems}}';
     var template = Handlebars.compile(listTemplate); 
     return template;
   },
@@ -105,7 +105,7 @@ _.extend(Newstrition.prototype, {
       var dataIndex = $(e.delegateTarget).attr("data-index"); 
       //hide the first page, show the second
       $(".page1").hide();
-      _this.renderPage2(data.stats[0]);
+      _this.renderPage2(data.stats[dataIndex]);
     });
   },
 
