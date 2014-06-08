@@ -175,9 +175,8 @@ _.extend(Newstrition.prototype, {
     } else {
       chrome.history.search({
         text: "",
-
         //startTime: this.getStartSearchTime(),
-
+        maxResults: 1e4,
       }, function (results) {
         dfd.resolve(results);
       });
