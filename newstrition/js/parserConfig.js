@@ -165,10 +165,6 @@ var parserConfig = {
         "Culture"
       ], 
       [
-        "/.*?/.*?/.*?/", 
-        "Culture"
-      ], 
-      [
         "/.*?/.*?/.*?/world", 
         "World"
       ], 
@@ -573,10 +569,6 @@ var parserConfig = {
         "/news/science-and-technology", 
         "Science"
       ], 
-      [
-        "/news/science-and-technology", 
-        "Technology"
-      ]
     ], 
     "label": "The Economist"
   }, 

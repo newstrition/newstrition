@@ -37,7 +37,8 @@ def main():
                 if source_cats:
                     for source_cat in source_cats.split(','):
                         cat_re = base_path + source_cat.strip()
-                        cat_tests.append([cat_re, canonical_cat])
+                        if cat_re:
+                          cat_tests.append([cat_re, canonical_cat])
             source_config['categoryTests'] = cat_tests
             source_configs[source_config['domain']] = source_config
 
