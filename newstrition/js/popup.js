@@ -84,7 +84,7 @@ _.extend(Newstrition.prototype, {
   },
 
   getListTemplate : function () {
-    var listTemplate = '<h1>{{title}}</h1>{{#historyItems}}<div class="url-div"><span>{{url}}</span></div>{{/historyItems}}';
+    var listTemplate = '<h1>{{title}}</h1><div class="divider" style="background-color: {{color}}" ></div>{{#historyItems}}<div class="url-div"><span>{{url}}</span></div>{{/historyItems}}';
     var template = Handlebars.compile(listTemplate); 
     return template;
   },
@@ -325,9 +325,9 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     }; 
 
     // EDIT THIS TO CHANGE DATA SOURCE.
-    var data = formattedData;
-    console.log(data);
-    //var data = mockData; 
+    //var data = formattedData;
+    //console.log(data);
+    var data = mockData; 
     newstrition.data = data;
     newstrition.render(newstrition.data);
   });

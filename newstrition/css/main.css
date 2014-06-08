@@ -109,3 +109,9 @@ h1 {
 
 .item.celebrity:before {
   background-color: blue; }
+
+.divider {
+  width: 100%;
+  background-color: red;
+  height: 5px;
+  margin-bottom: 30px; }
