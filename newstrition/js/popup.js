@@ -137,7 +137,7 @@ _.extend(Newstrition.prototype, {
     } else {
       chrome.history.search({
         text: "",
-        startTime: startTime,
+        startTime: this.getStartSearchTime(),
       }, function (results) {
         dfd.resolve(results);
       });
