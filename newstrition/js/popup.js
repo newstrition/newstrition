@@ -163,15 +163,25 @@ _.extend(Newstrition.prototype, {
   generateCategoryGroups: function(analyzedHistoryItems) {
     // Generates category groupings from analyzed history items.
     var categoryGroups = {};
+    var totalItems = 0;
     _.each(analyzedHistoryItems, function(analyzedHistoryItem) {
       var categories = analyzedHistoryItem.parsedUrl.categories;
       _.each(categories, function(category) {
         // Initialize group for category if needed.
         if (_.isUndefined(categoryGroups[category])){
-          categoryGroups[category] = []
+          categoryGroups[category] = {
+            title: category,
+            historyItems: []
+          }
         }
-        categoryGroups[category].push(analyzedHistoryItem);
+        categoryGroups[category].historyItems.push(analyzedHistoryItem);
+        totalItems += 1;
       });
+    });
+
+    // Calculate aggregate stats for each category.
+    _.each(categoryGroups, function(categoryGroup) { 
+      categoryGroup.rawPercentage = categoryGroup.historyItems.length/totalItems;
     });
 
     return categoryGroups;
@@ -190,42 +200,15 @@ _.extend(Newstrition.prototype, {
     return dfd.promise();
   },
 
-  formatAggregateAnalysis: function(analysisResult) {
-    // Covnerts aggregate analysis into render data object.
+  generateAggregateData: function(categoryGroups) {
+    // Generate aggregate data from categories.
   }
+
 });
 
 
 document.addEventListener('DOMContentLoaded', function () { //TODO: what is a better endpoint?
   console.log("still alive");
-
-  /*
-  var startTime = newstrition.getStartSearchTime(1); // get one day of browsing history
-  var theTemplateScript = '{{#each}}{{title}}{{/each}}'; // (step 1)
-
-  var theData =  [
-  {
-  "title" : "Politics",
-  "percentage" : 10.0,
-  },
-  {
-  "title" : "Sports",
-  "percentage" : 30.0,
-  },
-  {
-  "title" : "World",
-  "percentage" : 40.0,
-  },
-  {
-  "title" : "Art",
-  "percentage" : 20.0,
-  }
-  ];
-
-  var theTemplate = Handlebars.compile(theTemplateScript);
-  $('.content').append(theTemplate(theData));
-
-  */
 
   newstrition = new Newstrition();
   var analysisPromise = newstrition.getCategoryGroupsFromHistory();
@@ -239,38 +222,48 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
   // When analysis is ready, do the rendering.
 
   analysisPromise.done(function(categoryGroups) {
-    // Format the category histogram for renderer.
-    console.log(categoryGroups);
+
+    // Format the category groups for renderer.
+    var formattedData = {stats: []};
+    _.each(categoryGroups, function(categoryGroup) {
+      categoryGroup.percentage = (100 * categoryGroup.rawPercentage).toFixed(1);
+      formattedData.stats.push(categoryGroup);
+    });
 
     var mockData = { 
       stats: [
         {
           title : "Politics",
-          percentage : 10.0,
-          number: .1,
+          percentage : '10.0',
+          rawPercentage: .1,
           historyItems: [{url: 'http://politicsA'}],
         },
         {
           title : "Sports",
-          percentage : 30.0,
-          number: .3,
+          percentage : '30.0',
+          rawPercentage: .3,
           historyItems: [{url: 'http://politicsA'}],
         },
         {
           title : "World",
-          percentage : 40.0,
-          number: .4,
+          percentage : '40.0',
+          rawPercentage: .4,
           historyItems: [{url: 'http://politicsA'}],
         },
         {
           title : "Art",
-          percentage : 20.0,
-          number: .2,
+          percentage : '20.0',
+          rawPercentage: .2,
           historyItems: [{url: 'http://politicsA'}],
         }
       ]
     }; 
-    var data = mockData;
+
+    // EDIT THIS TO CHANGE DATA SOURCE.
+    //var data = mockData;
+    var data = formattedData; 
+
+
     newstrition.render(data);
 
   
