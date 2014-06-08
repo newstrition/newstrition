@@ -239,25 +239,25 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           title : "Politics",
           percentage : 10.0,
           number: .1,
-          historyItems: [{url: 'http://politicsA'}, {'http://politicsB'}]
+          historyItems: [{url: 'http://politicsA'}],
         },
         {
           title : "Sports",
           percentage : 30.0,
           number: .3,
-          historyItems: [{url: 'http://sportsA'}, {'http://sportsB'}]
+          historyItems: [{url: 'http://politicsA'}],
         },
         {
           title : "World",
           percentage : 40.0,
           number: .4,
-          historyItems: [{url: 'http://worldA'}, {'http://worldB'}]
+          historyItems: [{url: 'http://politicsA'}],
         },
         {
           title : "Art",
           percentage : 20.0,
           number: .2,
-          historyItems: [{url: 'http://ArtA'}, {'http://ArtB'}]
+          historyItems: [{url: 'http://politicsA'}],
         }
       ]
     }; 
