@@ -228,9 +228,13 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     // Format the category groups for renderer.
     var formattedData = {stats: []};
     _.each(categoryGroups, function(categoryGroup) {
+      // Create css-friendly category id from title (lowercase, dash-separated).
+      categoryGroup.categoryId = categoryGroup.title.toLowerCase().replace(' ', '-');
+
       categoryGroup.percentage = (100 * categoryGroup.rawPercentage).toFixed(1);
       formattedData.stats.push(categoryGroup);
     });
+    console.log('formattedData is: ', formattedData);
 
     // MOCK DATA.
     // THIS REPRESENTS THE FORMAT KYLE WANTS.
@@ -268,8 +272,8 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     }; 
 
     // EDIT THIS TO CHANGE DATA SOURCE.
-    //var data = mockData;
-    var data = formattedData; 
+    var data = mockData;
+    //var data = formattedData; 
 
 
     newstrition.render(data);
