@@ -5,9 +5,9 @@
   </head>
 
   <body>
-    <script src="../newstrition/urlParserConfig.js"></script>
-    <script src="../newstrition/urlParserConfig.js"></script>
-    <script src="../newstrition/urlParser.js"></script>
+    <script src="../newstrition/js/underscore.js"></script>
+    <script src="../newstrition/js/urlParserConfig.js"></script>
+    <script src="../newstrition/js/urlParser.js"></script>
 
     <script>
       var testHistoryItems = [
@@ -17,6 +17,8 @@
       ];
 
       var urlParser = new UrlParser();
+      var sourceVisit = urlParser.parseUrl(testHistoryItems[0].url);
+      console.log(sourceVisit);
     </script>
 
   </body>
