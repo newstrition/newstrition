@@ -24,27 +24,37 @@ var newstrition = {
       return true;
   },
 
-  getEmbedlyMetadata: function (results) {
+  getTopLevelDomain: function (url) {
+    var matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+    var domain = matches && matches[1];  // domain will be null if no match is found
+    return domain;
+  },
+
+  getMetadata: function (results) {
     var filteredResults = [];
     for (var i = 0; i < results.length; i++) {
       var item = results[i];
       if (this.isAcceptedUrl(item.url)) {
-        var escapedUrl = encodeURI(item.url);
-        var endpoint = "http://api.embed.ly/1/extract?key=101bc33f920c46c69d93196edd9a8e1c&url=" + escapedUrl;
-        
-        $.getJSON(endpoint, function(data) {
-          console.log(data);
-          var embedly = { 
-            provider_name : data.provider_name,
-            provider_url : data.provider_url 
-          };
-          item.embedly = embedly;
-        });
-        filteredResults.push(item);
-      }
+
+        item.domain = this.getTopLevelDomain(item.url);
+
+        // ignore embedly metadata for now
+        // var escapedUrl = encodeURI(item.url);
+        // var endpoint = "http://api.embed.ly/1/extract?key=101bc33f920c46c69d93196edd9a8e1c&url=" + escapedUrl;
+        // $.getJSON(endpoint, function(data) {
+          //   console.log(data);
+          //   var embedly = { 
+            //     provider_name : data.provider_name,
+            //     provider_url : data.provider_url 
+            //   };
+            //   item.embedly = embedly;
+        //});
+      filteredResults.push(item);
     }
-    return filteredResults;
   }
+  return filteredResults;
+},
+
 }
 
 newstrition.parser = {
@@ -175,12 +185,9 @@ var data = [
   // results is array of HistoryItem results
   chrome.history.search({ "text" : "", "startTime" : startTime, "maxResults" : 5 }, function (results) {
     console.log(newstrition.parser.parseResults(results));
-    results = newstrition.getEmbedlyMetadata(results);
+    results = newstrition.getMetadata(results);
+    console.log(results);
 
-    window.setTimeout(3000, function() {
-      console.log("result");
-      console.log(results);
-    });
   });
 });
 
