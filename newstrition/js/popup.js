@@ -56,7 +56,7 @@ var newstrition = {
   },
 
   getTemplate : function () {
-    var sometemplate = '{{#stats}}<div><span class="title">{{title}}</span> <span class="num">{{percentage}}</span></div>{{/stats}}';
+    var sometemplate = '{{#stats}}<div class="item"><span class="title">{{title}}</span> <span class="num">{{percentage}}</span></div>{{/stats}}';
     var source = sometemplate;
     var template = Handlebars.compile(source); 
     return template;
