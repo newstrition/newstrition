@@ -1,5 +1,22 @@
 var Newstrition = function(){
   this.urlParser = new UrlParser();
+  
+  // This maps category ids to colors.
+  this.colorMap = {
+    'celebrity': '#bbbbbb',
+    'us-politics': '#009fe1',
+    'business':	'#f8ba62',
+    'culture': '#c38bfc',
+    'world': '#ff5b5b	',
+    'sports': '#f8ef62',
+    'science': '#62dcff',
+    'technology': '#08647e',
+    'opinion': '#ff628e',
+    'religion':	'#fc8bcb',
+    'education': '#c9ffb9',
+    'junk':	'#ff9b0c',
+    'entertainment': '#009fe1'
+  };
 };
 
 _.extend(Newstrition.prototype, {
@@ -254,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
       // Create css-friendly category id from title (lowercase, dash-separated).
       categoryGroup.idNum = i;
       categoryGroup.idCat = categoryGroup.title.toLowerCase().replace(' ', '-');
-
+      categoryGroup.color = newstrition.colorMap[categoryGroup.idCat];
       categoryGroup.percentage = (100 * categoryGroup.rawPercentage).toFixed(1);
       formattedData.stats.push(categoryGroup);
       i += 1;
@@ -267,12 +284,12 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
       stats: [
         {
           idNum: 0,
-          idCat:  'politics',
-          title : "Politics",
+          idCat:  'us-politics',
+          title : "US Politics",
           percentage : '10.0',
           rawPercentage: .1,
           historyItems: [{url: 'http://politicsA'}],
-          color: '#bada55'
+          color: '#bada55',
           number: .1,
           historyItems: [{url: 'http://politicsA'}, {url: 'http://politicsB'}, {url: 'http://politicsC'}]
         },
@@ -283,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
           percentage : '30.0',
           rawPercentage: .3,
           historyItems: [{url: 'http://politicsA'}],
-          color: '#bada55'
+          color: '#bada55',
           number: .3,
           historyItems: [{url: 'http://politicsA2'}, {url: 'http://politicsB2'}, {url: 'http://politicsC2'}]
         },
@@ -309,12 +326,10 @@ document.addEventListener('DOMContentLoaded', function () { //TODO: what is a be
     }; 
 
     // EDIT THIS TO CHANGE DATA SOURCE.
+    //var data = formattedData; 
     var data = mockData; 
     newstrition.data = data;
-    newstrition.render(data);
-
-  
-  
+    newstrition.render(newstrition.data);
   });
 });
 
