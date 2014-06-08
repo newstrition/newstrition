@@ -76,7 +76,7 @@ _.extend(Newstrition.prototype, {
   },
 
   getContentTemplate : function () {
-    var sometemplate = '{{#stats}}<div  data-index="{{idNum}}" class="item {{idCat}}"><span class="num" style="color:{{color}}">{{percentage}}</span>% <span class="title">{{title}}</span></div>{{/stats}}';
+    var sometemplate = '{{#stats}}<div  data-index="{{idNum}}" class="item {{idCat}}"><span class="num" style="color:{{color}}">{{percentage}}%</span> <span class="title">{{title}}</span></div>{{/stats}}';
 
     var source = sometemplate;
     var template = Handlebars.compile(source);
@@ -84,7 +84,7 @@ _.extend(Newstrition.prototype, {
   },
 
   getListTemplate : function () {
-    var listTemplate = '<h1>{{title}}</h1><div class="divider" style="background-color: {{color}}" ></div>{{#analyzedHistoryItems}}<div class="url-div"><span>{{historyItem.url}}</span></div>{{/analyzedHistoryItems}}';
+    var listTemplate = '<h1>{{title}}</h1><div class="divider" style="background-color: {{color}}" ></div>{{#analyzedHistoryItems}}<div class="url-div"><a class="{{idCat}}" href="{{historyItem.url}}" target="_blank"><span>{{historyItem.url}}</span></a></div>{{/analyzedHistoryItems}}';
     var template = Handlebars.compile(listTemplate); 
     return template;
   },

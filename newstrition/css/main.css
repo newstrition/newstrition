@@ -44,6 +44,10 @@ h1 {
     padding-left: 30px;
     font-size: 24px;
     margin-bottom: 10px; }
+    .content .item .title {
+      font-size: 18px;
+      display: block;
+      margin-left: 10px; }
     .content .item:last-of-type {
       padding-right: 0; }
     .content .item:before {
@@ -112,16 +116,38 @@ h1 {
 
 .divider {
   width: 100%;
+  margin-top: 5px;
   background-color: red;
-  height: 5px;
-  margin-bottom: 30px; }
+  height: 2px;
+  margin-bottom: 10px; }
 
-.advice {
-  clear: both; }
-  .advice .advice-img {
+.url-div {
+  margin-left: 20px;
+  -webkit-transition: all .4s; }
+  .url-div:hover, .url-div:target {
+    color: #c7c7c7; }
+  .url-div:before {
+    content: '';
     float: left;
-    height: 85px;
-    width: 85px;
-    background-image: url("../img/broccoli.png");
-    background-size: contain;
-    background-repeat: no-repeat; }
+    display: block;
+    position: relative;
+    background-color: #dedcdc;
+    height: 10px;
+    width: 10px;
+    top: 5px;
+    margin-right: 10px; }
+  .url-div .advice {
+    clear: both; }
+    .url-div .advice .advice-img {
+      float: left;
+      height: 85px;
+      width: 85px;
+      background-image: url("../img/broccoli.png");
+      background-size: contain;
+      background-repeat: no-repeat; }
+
+#hidePage2 {
+  float: right;
+  color: #dedcdc;
+  font-size: 28px;
+  cursor: pointer; }
