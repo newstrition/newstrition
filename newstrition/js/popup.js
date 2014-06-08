@@ -59,7 +59,7 @@ _.extend(Newstrition.prototype, {
   },
 
   getPage1Template : function () {
-    var sometemplate = '{{#stats}}<div class="item"><span class="title">{{title}}</span> <span class="num">{{percentage}}</span></div>{{/stats}}';
+    var sometemplate = '{{#stats}}<div class="item"><span class="num">{{percentage}}</span>% <span class="title">{{title}}</span></div>{{/stats}}';
     var source = sometemplate;
     var template = Handlebars.compile(source); 
     return template;
@@ -87,7 +87,9 @@ _.extend(Newstrition.prototype, {
         '#62dcff',
         '#08647e'
       ];
+      alert(data[0].color)
       nv.addGraph(function() {
+
         var chart = nv.models.pieChart()
         .x(function(d) { return d.title; })
         .y(function(d) { return d.percentage; })
